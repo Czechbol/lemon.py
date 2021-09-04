@@ -2,7 +2,6 @@ import os
 import sys
 from typing import List
 
-import guilded
 from guilded.ext import commands
 
 from core import exceptions
@@ -16,8 +15,10 @@ __version__ = "0.0.0"
 def test_dotenv() -> None:
     if type(os.getenv("DB_STRING")) != str:
         raise exceptions.DotEnvException("DB_STRING is not set.")
-    if type(os.getenv("TOKEN")) != str:
-        raise exceptions.DotEnvException("TOKEN is not set.")
+    if type(os.getenv("EMAIL")) != str:
+        raise exceptions.DotEnvException("EMAIL is not set.")
+    if type(os.getenv("PASSWORD")) != str:
+        raise exceptions.DotEnvException("PASSWORD is not set.")
 
 
 test_dotenv()
@@ -64,16 +65,10 @@ def _prefix_callable(bot, message) -> List[str]:
     return base
 
 
-intents = guilded.Intents.all()
-
-from core import utils
 from core.help import Help
 
 bot = commands.Bot(
-    allowed_mentions=guilded.AllowedMentions(roles=False, everyone=False, users=True),
-    command_prefix=_prefix_callable,
-    help_command=Help(),
-    intents=intents,
+    command_prefix="!", help_command=Help(), description="I am a Test bot"
 )
 
 
@@ -90,26 +85,10 @@ guild_log = logging.Guild.logger(bot)
 already_loaded: bool = False
 
 
-async def update_app_info(bot: commands.Bot):
-    # Update bot information
-    app: guilded.AppInfo = await bot.application_info()
-    if app.team:
-        bot.owner_ids = {m.id for m in app.team.members}
-    else:
-        bot.owner_id = app.owner.id
-
-
 @bot.event
 async def on_ready():
     """This is run on login and on reconnect."""
     global already_loaded
-
-    # Update information about user's owners
-    await update_app_info(bot)
-
-    # If the status is set to "auto", let the loop in Admin module take care of it
-    status = "invisible" if config.status == "auto" else config.status
-    await utils.Guilded.update_presence(bot, status=status)
 
     if already_loaded:
         await bot_log.info(None, None, "Reconnected")
@@ -155,4 +134,4 @@ for module in db_modules:
 
 # Run the bot
 
-bot.run(os.getenv("TOKEN"))
+bot.run(os.getenv("EMAIL"), os.getenv("PASSWORD"))

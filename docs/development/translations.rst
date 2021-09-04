@@ -57,7 +57,7 @@ Sometimes context isn't available, though -- e.g. in raw reaction. These times y
 	...
 
 	@commands.Cog.listener()
-	async def on_raw_reaction_add(self, payload: guilded.RawReactionActionEvent):
+	async def on_raw_reaction_add(self, payload: guilded.RawReactionActionEvent): #FIXME this is wrong
 	    tc = TranslationContext(payload.guild_id, payload.user_id)
 
 	    message = await utils.Guilded.get_message(

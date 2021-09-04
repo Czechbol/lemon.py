@@ -25,7 +25,7 @@ class Logging(database.base):
 
     Each :class:`~database.logging.Logging` object has attribute
     :attr:`guild_id` representing :class:`guilded.Guild` and :attr:`channel_id`
-    representing :class:`guilded.TextChannel`. They determine where the log
+    representing :class:`guilded.channel.ChatChannel`. They determine where the log
     should be sent, if one is created.
 
     The :attr:`scope` may only have two values: ``bot`` or ``guild``, and it

@@ -41,12 +41,12 @@ class Base(commands.Cog):
         )
         embed.add_field(
             name=tr("uptime", "time_since", ctx),
-            value=utils.Time.datetime(self.boot),
+            value=f"`{utils.Time.datetime(self.boot)}`",
             inline=False,
         )
         embed.add_field(
             name=tr("uptime", "time_delta", ctx),
-            value=str(delta),
+            value=f"`{str(delta)}`",
             inline=False,
         )
 
@@ -60,7 +60,7 @@ class Base(commands.Cog):
 
     @commands.check(check.acl)
     @autopin.command(name="get")
-    async def autopin_get(self, ctx, channel: guilded.TextChannel = None):
+    async def autopin_get(self, ctx, channel: guilded.channel.ChatChannel = None):
         embed = utils.Guilded.create_embed(
             author=ctx.author, title=tr("autopin get", "title", ctx)
         )
@@ -87,7 +87,9 @@ class Base(commands.Cog):
 
     @commands.check(check.acl)
     @autopin.command(name="set")
-    async def autopin_set(self, ctx, limit: int, channel: guilded.TextChannel = None):
+    async def autopin_set(
+        self, ctx, limit: int, channel: guilded.channel.ChatChannel = None
+    ):
         """Set autopin limit."""
         if limit < 1:
             raise commands.ArgumentError("Limit has to be at least one.")
@@ -114,7 +116,7 @@ class Base(commands.Cog):
 
     @commands.check(check.acl)
     @autopin.command(name="unset")
-    async def autopin_unset(self, ctx, channel: guilded.TextChannel = None):
+    async def autopin_unset(self, ctx, channel: guilded.channel.ChatChannel = None):
         if channel is None:
             AutoPin.remove(ctx.guild.id, None)
             await guild_log.info(ctx.author, ctx.channel, "Autopin unset globally.")
@@ -133,7 +135,7 @@ class Base(commands.Cog):
 
     @commands.check(check.acl)
     @bookmarks.command(name="get")
-    async def bookmarks_get(self, ctx, channel: guilded.TextChannel = None):
+    async def bookmarks_get(self, ctx, channel: guilded.channel.ChatChannel = None):
         embed = utils.Guilded.create_embed(
             author=ctx.author, title=tr("bookmarks get", "title", ctx)
         )
@@ -158,7 +160,7 @@ class Base(commands.Cog):
     @commands.check(check.acl)
     @bookmarks.command(name="set")
     async def bookmarks_set(
-        self, ctx, enabled: bool, channel: guilded.TextChannel = None
+        self, ctx, enabled: bool, channel: guilded.channel.ChatChannel = None
     ):
         """Enable or disable bookmarking."""
         if channel is None:
@@ -175,7 +177,7 @@ class Base(commands.Cog):
 
     @commands.check(check.acl)
     @bookmarks.command(name="unset")
-    async def bookmarks_unset(self, ctx, channel: guilded.TextChannel = None):
+    async def bookmarks_unset(self, ctx, channel: guilded.channel.ChatChannel = None):
         """Remove bookmark settings."""
         if channel is None:
             Bookmark.remove(ctx.guild.id, None)
@@ -195,7 +197,7 @@ class Base(commands.Cog):
 
     @commands.check(check.acl)
     @autothread.command(name="get")
-    async def autothread_get(self, ctx, channel: guilded.TextChannel = None):
+    async def autothread_get(self, ctx, channel: guilded.channel.ChatChannel = None):
         embed = utils.Guilded.create_embed(
             author=ctx.author, title=tr("autothread get", "title", ctx)
         )
@@ -229,7 +231,7 @@ class Base(commands.Cog):
     @commands.check(check.acl)
     @autothread.command(name="set")
     async def autothread_set(
-        self, ctx, limit: int, channel: guilded.TextChannel = None
+        self, ctx, limit: int, channel: guilded.channel.ChatChannel = None
     ):
         if limit < 1:
             raise commands.ArgumentError("Limit has to be at least one.")
@@ -256,7 +258,7 @@ class Base(commands.Cog):
 
     @commands.check(check.acl)
     @autothread.command(name="unset")
-    async def autothread_unset(self, ctx, channel: guilded.TextChannel = None):
+    async def autothread_unset(self, ctx, channel: guilded.channel.ChatChannel = None):
         if channel is None:
             AutoThread.remove(ctx.guild.id, None)
             await guild_log.info(ctx.author, ctx.channel, "Autothread unset globally.")
@@ -270,8 +272,11 @@ class Base(commands.Cog):
     #
 
     @commands.Cog.listener()
-    async def on_raw_reaction_add(self, payload: guilded.RawReactionActionEvent):
+    async def on_raw_reaction_add(
+        self,
+    ):  # , payload: guilded.RawReactionActionEvent): # FIXME RawReactionActionEvent doesn't exist in guilded.py
         """Handle message pinning."""
+        payload = None
         if payload.guild_id is None or payload.member is None:
             return
 
@@ -301,11 +306,12 @@ class Base(commands.Cog):
 
     async def _autopin(
         self,
-        payload: guilded.RawReactionActionEvent,
+        # payload: guilded.RawReactionActionEvent,  # FIXME RawReactionActionEvent doesn't exist in guilded.py
         message: guilded.Message,
         emoji: str,
     ):
         """Handle autopin functionality."""
+        payload = None
         tc = TranslationContext(payload.guild_id, payload.user_id)
 
         if emoji == "📍" and not payload.member.bot:
@@ -354,7 +360,8 @@ class Base(commands.Cog):
             await message.add_reaction("📍")
 
     async def _bookmark(
-        self, payload: guilded.RawReactionActionEvent, message: guilded.Message
+        self,
+        message: guilded.Message,  # , payload: guilded.RawReactionActionEvent # FIXME RawReactionActionEvent doesn't exist in guilded.py
     ):
         """Handle bookmark functionality."""
         if not Bookmark.get(payload.guild_id).enabled:
@@ -405,7 +412,7 @@ class Base(commands.Cog):
 
     async def _autothread(
         self,
-        payload: guilded.RawReactionActionEvent,
+        # payload: guilded.RawReactionActionEvent, # FIXME RawReactionActionEvent doesn't exist in guilded.py
         message: guilded.Message,
     ):
         """Handle autothread functionality."""

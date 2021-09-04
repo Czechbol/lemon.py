@@ -7,7 +7,7 @@ import sys
 import tempfile
 from typing import Optional, List, Tuple
 
-from guilded.ext import commands, tasks
+from guilded.ext import commands
 
 import database.config
 from core import check, text, logging, utils
@@ -75,8 +75,8 @@ class Admin(commands.Cog):
         self.status_loop.cancel()
 
     # Loops
-
-    @tasks.loop(minutes=1)
+    # FIXME Guilded.py does not have tasks
+    '''@tasks.loop(minutes=1)
     async def status_loop(self):
         """Observe latency to the Guilded API and switch status automatically.
 
@@ -103,7 +103,7 @@ class Admin(commands.Cog):
     @status_loop.before_loop
     async def before_status_loop(self):
         if not self.bot.is_ready():
-            await self.bot.wait_until_ready()
+            await self.bot.wait_until_ready()'''
 
     # Commands
 
@@ -160,7 +160,7 @@ class Admin(commands.Cog):
             result += ", ".join(modules) + "\n"
         await ctx.send(result)
 
-    @commands.max_concurrency(1, per=commands.BucketType.default, wait=False)
+    # FIXME - guilded doesn't have max_concurrency @commands.max_concurrency(1, per=commands.BucketType.default, wait=False)
     @commands.check(check.acl)
     @repository.command(name="install")
     async def repository_install(self, ctx, url: str):
@@ -238,7 +238,7 @@ class Admin(commands.Cog):
             f"Repository {repository.name} installed.",
         )
 
-    @commands.max_concurrency(1, per=commands.BucketType.default, wait=False)
+    # FIXME - guilded doesn't have max_concurrency @commands.max_concurrency(1, per=commands.BucketType.default, wait=False)
     @commands.check(check.acl)
     @repository.command(name="update", aliases=["fetch", "pull"])
     async def repository_update(self, ctx, name: str):
@@ -273,7 +273,7 @@ class Admin(commands.Cog):
             await ctx.send("```" + r + "```")
         await bot_log.info(ctx.author, ctx.channel, f"Repository {name} updated.")
 
-    @commands.max_concurrency(1, per=commands.BucketType.default, wait=False)
+    # FIXME - guilded doesn't have max_concurrency @commands.max_concurrency(1, per=commands.BucketType.default, wait=False)
     @commands.check(check.acl)
     @repository.command(name="uninstall")
     async def repository_uninstall(self, ctx, name: str):

@@ -87,7 +87,7 @@ class Help(commands.MinimalHelpCommand):
         if commands:
             self.paginator.add_line("**" + heading + "**")
             command_list = ", ".join(command.name for command in commands)
-            self.paginator.add_line(command_list)
+            self.paginator.add_line(f"- {command_list}")
 
     def add_aliases_formatting(self, aliases) -> None:
         """Set formatting for aliases.
@@ -192,7 +192,7 @@ class Help(commands.MinimalHelpCommand):
         """
         destination = self.get_destination()
         for page in self.paginator.pages:
-            await destination.send(">>> " + page)
+            await destination.send(page)
 
     def _get_command_translator(self, command: commands.Command) -> Optional[Callable]:
         """Get translation function for current command."""

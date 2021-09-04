@@ -50,12 +50,9 @@ def write_log(entry) -> None:
 LogActor = Optional[Union[guilded.Member, guilded.User]]
 LogSource = Optional[
     Union[
-        guilded.DMChannel,
-        guilded.GroupChannel,
-        guilded.TextChannel,
-        guilded.StageChannel,
-        guilded.StoreChannel,
-        guilded.VoiceChannel,
+        guilded.channel.DMChannel,
+        guilded.channel.ChatChannel,
+        guilded.channel.VoiceChannel
     ]
 ]
 

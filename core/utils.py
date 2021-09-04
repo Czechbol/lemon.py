@@ -150,10 +150,11 @@ class Guilded:
         except guilded.errors.HTTPException:
             return None
 
-    @staticmethod
+    """@staticmethod
     def message_url_from_reaction_payload(payload: guilded.RawReactionActionEvent):
         guild_id = payload.guild_id if payload.guild_id is not None else "@me"
-        return f"https://guilded.com/channels/{guild_id}/{payload.channel_id}/{payload.message_id}"
+        return f"https://guilded.com/channels/{guild_id}/{payload.channel_id}/{payload.message_id}"""
+    # FIXME RawReactionActionEvent doesn't exist in guilded.py
 
     @staticmethod
     def create_embed(
@@ -191,7 +192,7 @@ class Guilded:
             icon_url=getattr(author, "avatar_url", guilded.Embed.Empty),
             text=footer,
         )
-        embed.timestamp = datetime.datetime.now(tz=datetime.timezone.utc)
+        # embed.timestamp = datetime.datetime.utcnow() # FIXME Reported this issue to the guilded.py dev, perhaps it will work soon
 
         return embed
 

@@ -1,12 +1,12 @@
 class TranslationContext:
     """Fake class used for translation.
 
-    There are some situations where there is no command context, e.g. when a
+    (((There are some situations where there is no command context, e.g. when a
     reaction is added, especially when it is
-    :class:`guilded.RawReactionActionEvent`. This may be used to get around.
+    :class:`guilded.RawReactionActionEvent`. This may be used to get around.)))
 
     See :class:`~core.text.Translator` for more details.
-    """
+    """ # FIXME Is this still relevant?
 
     __slots__ = ("guild_id", "user_id")
 
