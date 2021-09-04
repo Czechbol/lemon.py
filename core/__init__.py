@@ -6,7 +6,7 @@ class TranslationContext:
     :class:`guilded.RawReactionActionEvent`. This may be used to get around.)))
 
     See :class:`~core.text.Translator` for more details.
-    """ # FIXME Is this still relevant?
+    """  # FIXME Is this still relevant?
 
     __slots__ = ("guild_id", "user_id")
 

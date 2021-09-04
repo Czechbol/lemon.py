@@ -364,6 +364,7 @@ class Base(commands.Cog):
         message: guilded.Message,  # , payload: guilded.RawReactionActionEvent # FIXME RawReactionActionEvent doesn't exist in guilded.py
     ):
         """Handle bookmark functionality."""
+        payload = None
         if not Bookmark.get(payload.guild_id).enabled:
             return
 
@@ -416,6 +417,7 @@ class Base(commands.Cog):
         message: guilded.Message,
     ):
         """Handle autothread functionality."""
+        payload = None
         # only new versions of guilded.py support threads
         if guilded.version_info.major < 2:
             return

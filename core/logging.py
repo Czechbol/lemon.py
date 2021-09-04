@@ -52,7 +52,7 @@ LogSource = Optional[
     Union[
         guilded.channel.DMChannel,
         guilded.channel.ChatChannel,
-        guilded.channel.VoiceChannel
+        guilded.channel.VoiceChannel,
     ]
 ]
 
