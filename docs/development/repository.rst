@@ -7,12 +7,12 @@ Creating a repository
 
 Let's write a simple repository with just one module. We're gonna name it ``bistro``, because we'll gonna be making some delicious snacks.
 
-You can start with an empty directory (named ``pumpkin-bistro``, for example), or you can use our `template repository <https://github.com/Pumpkin-py/pumpkin-template>`_, it doesn't matter.
+You can start with an empty directory (named ``lemon-bistro``, for example), or you can use our `template repository <https://github.com/Lemon-py/lemon-template>`_, it doesn't matter.
 
 Repository metadata
 -------------------
 
-The first file we're gonna create will be ``__init__.py``. This file MUST be present in your repository, because pumpkin.py reads its information in order to work with it. It has to contain three variables described below´:
+The first file we're gonna create will be ``__init__.py``. This file MUST be present in your repository, because lemon.py reads its information in order to work with it. It has to contain three variables described below´:
 
 - ``__name__`` is a string representing name of the repository. It must be instance-unique and can only contain lowercase ASCII letters and a dash (``[a-z_]+``) and MUST NOT be ``core`` or ``base``. Moderators can run the **repository list** command to show installed repositories to prevent name clashes.
 - ``__version__`` is a string that MUST follow the `semver rules <https://semver.org/>`_.
@@ -26,7 +26,7 @@ In our case, the file might look like this:
 	__version__ = "0.0.1"
 	__all__ = ("bistro", )
 
-Next file that SHOULD be present in your repository is ``README.md`` or ``README.rst``. This file should contain the information about the repository and its modules. It should also link to the pumpkin.py project, so the visitors aren't confused about the meaning of it.
+Next file that SHOULD be present in your repository is ``README.md`` or ``README.rst``. This file should contain the information about the repository and its modules. It should also link to the lemon.py project, so the visitors aren't confused about the meaning of it.
 
 Our README may start like this:
 
@@ -34,7 +34,7 @@ Our README may start like this:
 
 	# Bistro
 
-	An unofficial [pumpkin.py](https://github.com/pumpkin-py) extension.
+	An unofficial [lemon.py](https://github.com/lemon-py) extension.
 
 	The module allows you to ...
 
@@ -61,7 +61,7 @@ The last metadata file is ``CHANGELOG.rst``, which SHOULD be present in your rep
 Resource files
 --------------
 
-``requiremens.txt`` MAY be present in the repository. If found, the pumpkin.py instance will use standard tools to install packages from this file. You MUST NOT add packages your modules do not require.
+``requiremens.txt`` MAY be present in the repository. If found, the lemon.py instance will use standard tools to install packages from this file. You MUST NOT add packages your modules do not require.
 
 .. note::
 
@@ -180,6 +180,6 @@ An example database file ``bistro/database.py`` may look like this:
 Testing
 -------
 
-You MAY include a directory called `tests/` in the root of the repository (e.g. between the module directories). This directory will be ignored by pumpkin.py module checks and won't emit "Invalid module" warnings.
+You MAY include a directory called `tests/` in the root of the repository (e.g. between the module directories). This directory will be ignored by lemon.py module checks and won't emit "Invalid module" warnings.
 
-Please note that this may be changed in the future and some pumpkin.py versions may require the modules to be subclassed in `modules/` directory, if this proves to be confusing.
+Please note that this may be changed in the future and some lemon.py versions may require the modules to be subclassed in `modules/` directory, if this proves to be confusing.

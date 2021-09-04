@@ -87,7 +87,7 @@ class Module:
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(
-        prog="pumpkin.py language file checker",
+        prog="lemon.py language file checker",
     )
     parser.add_argument("directory", type=str, help="Directory to be checked.")
     args = parser.parse_args()

@@ -453,19 +453,19 @@ class Admin(commands.Cog):
             await utils.Guilded.update_presence(self.bot)
 
     @commands.check(check.acl)
-    @commands.group(name="pumpkin")
-    async def pumpkin_(self, ctx):
+    @commands.group(name="lemon")
+    async def lemon_(self, ctx):
         await utils.Guilded.send_help(ctx)
 
     @commands.check(check.acl)
-    @pumpkin_.command(name="restart")
-    async def pumpkin_restart(self, ctx):
+    @lemon_.command(name="restart")
+    async def lemon_restart(self, ctx):
         """This won't work without system-level error detection."""
         exit(1)
 
     @commands.check(check.acl)
-    @pumpkin_.command(name="shutdown")
-    async def pumpkin_shutdown(self, ctx):
+    @lemon_.command(name="shutdown")
+    async def lemon_shutdown(self, ctx):
         exit(0)
 
     #

@@ -17,7 +17,7 @@ from database.logging import Logging
 
 
 def get_main_directory() -> str:
-    """Return path to the directory containing ``pumpkin.py`` script."""
+    """Return path to the directory containing ``lemon.py`` script."""
     main_py = sys.modules["__main__"].__file__
     return os.path.abspath(os.path.join(main_py, os.pardir))
 

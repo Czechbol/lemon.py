@@ -21,24 +21,24 @@ Clone your fork:
 
 .. code-block:: bash
 
-	git clone https://github.com/<your username>/pumpkin.py.git
+	git clone https://github.com/<your username>/lemon.py.git
 	# or, if you have SSH keys setup
-	git clone git@github.com:<your username>/pumpkin.py.git
+	git clone git@github.com:<your username>/lemon.py.git
 
 Then you have to setup link back to our main repository, which is usually called upstream:
 
 .. code-block:: bash
 
-	git remote add upstream https://github.com/Pumpkin-py/pumpkin.py.git
+	git remote add upstream https://github.com/Lemon-py/lemon.py.git
 
 Database setup
 --------------
 
 Instead of high-performance PostgreSQL we are going to be using SQLite3, which has giant advantage: it requires zero setup.
 
-Create a file called ``.env`` in the root directory of your cloned repo and copy the content of the ``default.env`` file into it. The ``.env`` file will hold sensitive bot information, so don't let anyone see its content, ever. Open it and paste the connection string into the ``DB_STRING`` variable: ``sqlite:///pumpkin.db``.
+Create a file called ``.env`` in the root directory of your cloned repo and copy the content of the ``default.env`` file into it. The ``.env`` file will hold sensitive bot information, so don't let anyone see its content, ever. Open it and paste the connection string into the ``DB_STRING`` variable: ``sqlite:///lemon.db``.
 
-If you ever need to wipe the database, just delete the ``pumpkin.db`` file. The bot will create a new one when it starts again.
+If you ever need to wipe the database, just delete the ``lemon.db`` file. The bot will create a new one when it starts again.
 
 Development workflow with git
 -----------------------------
@@ -90,7 +90,7 @@ Assuming you are in virtual environment and have everything set up, run
 
 .. code-block:: bash
 
-	python3 pumpkin.py
+	python3 lemon.py
 
 It will print startup information and a welcome message, something like this:
 

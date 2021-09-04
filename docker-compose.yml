@@ -15,8 +15,8 @@ services:
     env_file: .env
     volumes:
       - "/var/run/docker.sock:/var/run/docker.sock"
-      - ./:/Pumpkin/
-    command: python pumpkin.py
+      - ./:/lemon.py/
+    command: python lemon.py
     depends_on:
       - db
     restart: unless-stopped

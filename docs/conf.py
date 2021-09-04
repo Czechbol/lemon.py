@@ -18,11 +18,11 @@ sys.path.insert(0, os.path.abspath(".."))
 
 # -- Project information -----------------------------------------------------
 
-project = "pumpkin.py core"
+project = "lemon.py core"
 copyright = "2021, Czechbol, sinus-x"
 author = "Czechbol, sinus-x"
 
-with open("../pumpkin.py", "r") as handle:
+with open("../lemon.py", "r") as handle:
     version = "UNKNOWN"
     for line in handle.readlines():
         if line.startswith("__version__"):
@@ -80,7 +80,7 @@ autoapi_dirs = [
     "../core",
     "../database",
     "../modules",
-    "../pumpkin.py",
+    "../lemon.py",
 ]
 autoapi_type = "python"
 autoapi_generate_api_docs = True

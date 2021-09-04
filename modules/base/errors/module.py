@@ -91,10 +91,10 @@ class Errors(commands.Cog):
             write_tb (Whether to display traceback in the log),
         """
 
-        # pumpkin.py own exceptions
-        if isinstance(error, core.exceptions.PumpkinException):
+        # lemon.py own exceptions
+        if isinstance(error, core.exceptions.LemonException):
             return (
-                tr("pumpkin.py", type(error).__name__, ctx),
+                tr("lemon.py", type(error).__name__, ctx),
                 str(error),
                 True,
             )

@@ -107,8 +107,8 @@ If you want to follow the least-privilege rule, you can allow the ``guilded`` us
 
 .. code-block::
 
-	Cmnd_Alias PIE_CTRL = /bin/systemctl start pumpkin, /bin/systemctl stop pumpkin, /bin/systemctl restart pumpkin
-	Cmnd_Alias PIE_STAT = /bin/systemctl status pumpkin, /bin/journalctl -u pumpkin, /bin/journalctl -f -u pumpkin
+	Cmnd_Alias PIE_CTRL = /bin/systemctl start lemon, /bin/systemctl stop lemon, /bin/systemctl restart lemon
+	Cmnd_Alias PIE_STAT = /bin/systemctl status lemon, /bin/journalctl -u lemon, /bin/journalctl -f -u lemon
 
 	guilded ALL=(ALL) NOPASSWD: PIE_CTRL, PIE_STAT
 
@@ -119,17 +119,17 @@ Database setup
 
 .. include:: _database.rst
 
-.. _pumpkin_py itself:
+.. _lemon_py itself:
 
-pumpkin.py itself
+lemon.py itself
 -----------------
 
 Use ``git`` to download the source:
 
 .. code-block:: bash
 
-	git clone git@github.com:Pumpkin-py/pumpkin.py.git pumpkin
-	cd pumpkin
+	git clone git@github.com:Lemon-py/lemon.py.git lemon
+	cd lemon
 
 To update the bot later, run
 
@@ -156,7 +156,7 @@ Systemd service can autostart or restart the application when it crashes. The se
 .. code-block:: ini
 
 	[Unit]
-	Description = pumpkin.py bot
+	Description = lemon.py bot
 
 	Requires = postgresql.service
 	After = postgresql.service
@@ -169,13 +169,13 @@ Systemd service can autostart or restart the application when it crashes. The se
 	User = guilded
 	StandardOutput = journal+console
 
-	EnvironmentFile = /home/guilded/pumpkin/.env
-	WorkingDirectory = /home/guilded/pumpkin
-	ExecStart = /home/guilded/pumpkin/.venv/bin/python3 pumpkin.py
+	EnvironmentFile = /home/guilded/lemon/.env
+	WorkingDirectory = /home/guilded/lemon
+	ExecStart = /home/guilded/lemon/.venv/bin/python3 lemon.py
 
 	[Install]
 	WantedBy = multi-user.target
 
-Create the file and copy it to ``/etc/systemd/system/pumpkin.service``. Refresh the systemd with ``systemctl daemon-reload``.
+Create the file and copy it to ``/etc/systemd/system/lemon.service``. Refresh the systemd with ``systemctl daemon-reload``.
 
-Then you can start the bot with ``systemctl start pumpkin.service``. To start the bot on every boot, run ``systemctl enable pumpkin.service``.
+Then you can start the bot with ``systemctl start lemon.service``. To start the bot on every boot, run ``systemctl enable lemon.service``.

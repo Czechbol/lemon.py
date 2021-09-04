@@ -9,7 +9,7 @@ Connecting to remote server by using username and password gets annoying really 
 .. code-block:: bash
 
 	ssh-keygen -t ed25519
-	# save the file as something descriptive, e.g. /home/<username>/.ssh/pumpkin_server
+	# save the file as something descriptive, e.g. /home/<username>/.ssh/lemon_server
 	# you can omit the password by pressing Enter twice
 
 Then add the key to the SSH configuration file (``~/.ssh/config``), so it knows when to use it.
@@ -20,9 +20,9 @@ Then add the key to the SSH configuration file (``~/.ssh/config``), so it knows 
 		user guilded
 		PubkeyAuthentication yes
 		IdentitiesOnly yes
-		IdentityFile ~/.ssh/pumpkin_server
+		IdentityFile ~/.ssh/lemon_server
 
-To use the SSH key on the server, you have to add the contents of the **public** key (e.g. ``/home/<username>/.ssh/pumpkin_server.pub``) to server's ``/home/guilded/.ssh/authorized_keys``.
+To use the SSH key on the server, you have to add the contents of the **public** key (e.g. ``/home/<username>/.ssh/lemon_server.pub``) to server's ``/home/guilded/.ssh/authorized_keys``.
 
 PostgreSQL backups
 ------------------
@@ -33,15 +33,15 @@ The following script makes backup of the database and saves it. If it is the fir
 
 	#!/bin/bash
 
-	backups=~/pumpkin-backups
+	backups=~/lemon-backups
 
 	mkdir -p $backups
 	cd $backups
 
 	# Database inside of Docker
-	docker exec -it pumpkin_db_1 pg_dump -c -U postgres > dump_`date +%Y-%m-%d"_"%H:%M:%S`.sql
+	docker exec -it lemon_db_1 pg_dump -c -U postgres > dump_`date +%Y-%m-%d"_"%H:%M:%S`.sql
 	# Database running directly on the system
-	pg_dump -U <database user name> pumpkin > dump_`date +%Y-%m-%d"_"%H:%M:%S`.sql
+	pg_dump -U <database user name> lemon > dump_`date +%Y-%m-%d"_"%H:%M:%S`.sql
 
 	today=$(date +%d)
 
@@ -74,7 +74,7 @@ Then you can set up a cron job to run the script every day.
 .. code-block::
 
 	# make backup every day at 1 AM
-	0 1 * * * bash ~/pumpkin-backup.sh >> ~/pumpkin-backup.log 2>&1
+	0 1 * * * bash ~/lemon-backup.sh >> ~/lemon-backup.log 2>&1
 
 To **restore** the backup, you have to drop the database first, which may require you to login as the ``postgres`` user:
 

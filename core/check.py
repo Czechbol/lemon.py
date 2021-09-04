@@ -26,7 +26,7 @@ def acl(ctx: commands.Context) -> bool:
         access the data directly, instead of loading them dynamically from the
         API endpoint. The :attr:`~guilded.ext.commands.Bot.owner_id`/
         :attr:`~guilded.ext.commands.Bot.owner_ids` argument may be ``None``:
-        that's the reason pumpkin.py refreshes it on each ``on_ready()`` event
+        that's the reason lemon.py refreshes it on each ``on_ready()`` event
         in the main file.
 
     If the context is in the DMs, access is always denied, because the ACL is

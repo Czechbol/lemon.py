@@ -17,7 +17,7 @@ The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "S
 
 - Fork the repository
 - Clone your fork
-- Add upstream: `git remote add upstream git@github.com:Pumpkin-py/pumpkin.py.git`
+- Add upstream: `git remote add upstream git@github.com:Lemon-py/lemon.py.git`
 - Create your feature branch: `git checkout main && git branch my-feature && git checkout my-feature`
 - Open your pull requests from this branch
 
@@ -83,7 +83,7 @@ class MyModule(commands.Cog):
     ...
 ```
 
-Eg. **Python** libraries, **3rd party** libraries, **guilded.py** imports and **pumpkin.py** imports, separated by one line of space. Then two empty lines, translation initialisation, one empty line, logging setup, two empty lines and then the class definition. The `setup` function for **guilded.py** should be the last thing to be declared in the file.
+Eg. **Python** libraries, **3rd party** libraries, **guilded.py** imports and **lemon.py** imports, separated by one line of space. Then two empty lines, translation initialisation, one empty line, logging setup, two empty lines and then the class definition. The `setup` function for **guilded.py** should be the last thing to be declared in the file.
 
 ## Database
 

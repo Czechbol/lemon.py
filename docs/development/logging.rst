@@ -1,7 +1,7 @@
 Logging
 =======
 
-There are two log targets: the bot one and a guild one. You, as a developer, will most likely be using the Guild logger -- all the logs send to it will be contained only in the guild (and the hosting server); the Bot logs are distributed to all guilds the pumpkin.py instance is connected to.
+There are two log targets: the bot one and a guild one. You, as a developer, will most likely be using the Guild logger -- all the logs send to it will be contained only in the guild (and the hosting server); the Bot logs are distributed to all guilds the lemon.py instance is connected to.
 
 The logger targets are usually defined on top of the file:
 

@@ -1,18 +1,18 @@
-class PumpkinException(Exception):
-    """Common base for all pumpkin.py exceptions."""
+class LemonException(Exception):
+    """Common base for all lemon.py exceptions."""
 
     def __str__(self):
         """Text representation of the exception."""
         return super().__str__()
 
 
-class DotEnvException(PumpkinException):
+class DotEnvException(LemonException):
     """Raised when some module requires missing ``.env`` variable."""
 
     pass
 
 
-class ModuleException(PumpkinException):
+class ModuleException(LemonException):
     """Raised when module-related error occurs.
 
     :param repository: Repository name.
@@ -29,7 +29,7 @@ class ModuleException(PumpkinException):
         return f"Error in module {self.repository}.{self.module}: {self.message}"
 
 
-class BadTranslation(PumpkinException):
+class BadTranslation(LemonException):
     """Raised when translation file is not valid or contains errors.
 
     Four different states may occur:
