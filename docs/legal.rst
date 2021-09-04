@@ -7,7 +7,7 @@ By joining the server a lemon.py instance manages you agree with data collection
 
 The lemon.py framework is free and open source, released under the GNU GPL v3 licence. You are free to read and study the source code and to make any modifications, as long as you follow the licence requirements. Bot owners may also include non-public or third-party modules that extend official lemon.py's functionality. lemon.py's developers hold no responsibility for this third-party code.
 
-Official modules are available in its `GitHub organisation repositories <https://github.com/lemon-py>`_.
+Official modules are available in its `GitHub organisation repositories <https://github.com/Pumpkin-py>`_.
 
 By using lemon.py framework you are fully responsible for all activities that occur under your username.
 

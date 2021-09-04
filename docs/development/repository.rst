@@ -7,7 +7,7 @@ Creating a repository
 
 Let's write a simple repository with just one module. We're gonna name it ``bistro``, because we'll gonna be making some delicious snacks.
 
-You can start with an empty directory (named ``lemon-bistro``, for example), or you can use our `template repository <https://github.com/Lemon-py/lemon-template>`_, it doesn't matter.
+You can start with an empty directory (named ``lemon-bistro``, for example), or you can use our `template repository <https://github.com/Pumpkin-py/lemon-template>`_, it doesn't matter.
 
 Repository metadata
 -------------------
@@ -34,7 +34,7 @@ Our README may start like this:
 
 	# Bistro
 
-	An unofficial [lemon.py](https://github.com/lemon-py) extension.
+	An unofficial [lemon.py](https://github.com/Pumpkin-py) extension.
 
 	The module allows you to ...
 

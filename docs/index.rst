@@ -1,7 +1,7 @@
 Intro to lemon.py
 ===================
 
-`lemon.py <https://github.com/Lemon-py/lemon.py>`_ is universal and modular guilded bot.
+`lemon.py <https://github.com/Pumpkin-py/lemon.py>`_ is universal and modular guilded bot.
 
 .. note::
    This documentation is highly WIP, as the bot is. Proceed with caution.
