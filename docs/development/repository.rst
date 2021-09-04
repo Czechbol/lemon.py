@@ -72,12 +72,12 @@ The module
 
 For each module that has been specified in the init's ``__all__`` variable there must exist a directory with the same name at the root of the repository. And each module has to have a ``module.py`` file inside of its directory.
 
-In our case, we only have one module specified, so we have to create a file ``bistro/module.py``. This file has to contain the class inheriting from discord.py's Cog and the ``setup()`` function to load the module.
+In our case, we only have one module specified, so we have to create a file ``bistro/module.py``. This file has to contain the class inheriting from guilded.py's Cog and the ``setup()`` function to load the module.
 
 .. code-block:: python3
 
-	import discord
-	from discord.ext import commands
+	import guilded
+	from guilded.ext import commands
 
 	from core import acl, text, logging
 

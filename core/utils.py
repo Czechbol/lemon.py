@@ -1,8 +1,8 @@
 import datetime
 from typing import List, Union, Optional
 
-import discord
-from discord.ext import commands
+import guilded
+from guilded.ext import commands
 
 from core import text
 from database.config import Config
@@ -25,7 +25,7 @@ class Text:
         :return: Sanitised string.
         """
         if escape:
-            string = discord.utils.escape_markdown(string)
+            string = guilded.utils.escape_markdown(string)
         return string.replace("@", "@\u200b")[:limit]
 
     @staticmethod
@@ -122,19 +122,19 @@ class Time:
         return f"{m}:{s:02}"
 
 
-class Discord:
-    """Helper functions for (mostly) discord API actions."""
+class Guilded:
+    """Helper functions for (mostly) guilded API actions."""
 
     @staticmethod
     async def get_message(
         bot: commands.Bot, guild_id: int, channel_id: int, message_id: int
-    ) -> Optional[discord.Message]:
+    ) -> Optional[guilded.Message]:
         """Get message.
 
         If the message is contained in bot cache, it is returned from it, to
         save API calls. Otherwise it is fetched.
 
-        :param bot: The :class:`~discord.ext.commands.Bot` object.
+        :param bot: The :class:`~guilded.ext.commands.Bot` object.
         :param guild_id: Guild ID.
         :param channel_id: Channel ID.
         :param message_id: Message ID.
@@ -147,22 +147,22 @@ class Discord:
         try:
             channel = bot.get_guild(guild_id).get_channel(channel_id)
             return await channel.fetch_message(message_id)
-        except discord.errors.HTTPException:
+        except guilded.errors.HTTPException:
             return None
 
     @staticmethod
-    def message_url_from_reaction_payload(payload: discord.RawReactionActionEvent):
+    def message_url_from_reaction_payload(payload: guilded.RawReactionActionEvent):
         guild_id = payload.guild_id if payload.guild_id is not None else "@me"
-        return f"https://discord.com/channels/{guild_id}/{payload.channel_id}/{payload.message_id}"
+        return f"https://guilded.com/channels/{guild_id}/{payload.channel_id}/{payload.message_id}"
 
     @staticmethod
     def create_embed(
         *,
         error: bool = False,
-        author: Union[discord.Member, discord.User] = None,
+        author: Union[guilded.Member, guilded.User] = None,
         **kwargs,
-    ) -> discord.Embed:
-        """Create discord embed.
+    ) -> guilded.Embed:
+        """Create guilded embed.
 
         :param error: Whether the embed reports an error.
         :param author: Event author.
@@ -172,12 +172,12 @@ class Discord:
         If you supply ``title``, ``description``, ``color`` or ``footer``, they
         will be included in the embed.
         """
-        embed = discord.Embed(
-            title=kwargs.get("title", discord.Embed.Empty),
-            description=kwargs.get("description", discord.Embed.Empty),
+        embed = guilded.Embed(
+            title=kwargs.get("title", guilded.Embed.Empty),
+            description=kwargs.get("description", guilded.Embed.Empty),
             color=kwargs.get(
                 "color",
-                discord.Color.red() if error else discord.Color.green(),
+                guilded.Color.red() if error else guilded.Color.green(),
             ),
         )
 
@@ -188,7 +188,7 @@ class Discord:
         if kwargs.get("footer", False):
             footer += " | " + kwargs.get("footer")
         embed.set_footer(
-            icon_url=getattr(author, "avatar_url", discord.Embed.Empty),
+            icon_url=getattr(author, "avatar_url", guilded.Embed.Empty),
             text=footer,
         )
         embed.timestamp = datetime.datetime.now(tz=datetime.timezone.utc)
@@ -211,7 +211,7 @@ class Discord:
         return True
 
     @staticmethod
-    async def delete_message(message: discord.Message, delay: float = 0.0) -> bool:
+    async def delete_message(message: guilded.Message, delay: float = 0.0) -> bool:
         """Try to remove message.
 
         :param message: The message to be deleted.
@@ -220,13 +220,13 @@ class Discord:
         """
         try:
             await message.delete(delay=delay)
-        except discord.HTTPException:
+        except guilded.HTTPException:
             return False
         return True
 
     @staticmethod
     async def remove_reaction(
-        message: discord.Message, emoji, member: discord.Member
+        message: guilded.Message, emoji, member: guilded.Member
     ) -> bool:
         """Try to remove reaction.
 
@@ -238,7 +238,7 @@ class Discord:
         """
         try:
             await message.remove_reaction(emoji, member)
-        except discord.HTTPException:
+        except guilded.HTTPException:
             return False
         return True
 
@@ -252,8 +252,8 @@ class Discord:
         :param status: Overwrite presence status.
         """
         await bot.change_presence(
-            status=getattr(discord.Status, config.status if status is None else status),
-            activity=discord.Game(
+            status=getattr(guilded.Status, config.status if status is None else status),
+            activity=guilded.Game(
                 start=datetime.datetime.utcnow(),
                 name=config.prefix + "help",
             ),

@@ -7,7 +7,7 @@ import traceback
 from enum import IntEnum
 from typing import Optional, List, Union
 
-import discord
+import guilded
 
 from core import utils
 from database.logging import Logging
@@ -47,15 +47,15 @@ def write_log(entry) -> None:
 # Setup typing aliases
 
 
-LogActor = Optional[Union[discord.Member, discord.User]]
+LogActor = Optional[Union[guilded.Member, guilded.User]]
 LogSource = Optional[
     Union[
-        discord.DMChannel,
-        discord.GroupChannel,
-        discord.TextChannel,
-        discord.StageChannel,
-        discord.StoreChannel,
-        discord.VoiceChannel,
+        guilded.DMChannel,
+        guilded.GroupChannel,
+        guilded.TextChannel,
+        guilded.StageChannel,
+        guilded.StoreChannel,
+        guilded.VoiceChannel,
     ]
 ]
 
@@ -111,10 +111,10 @@ class LogEntry:
             "timestamp": self.timestamp.strftime("%Y-%m-%dT%H:%M:%S"),
         }
 
-    def format_discord(self):
-        """Format entry so it can be sent to discord logging channel.
+    def format_guilded(self):
+        """Format entry so it can be sent to guilded logging channel.
 
-        This is similar to :meth:`format_discord`, but it doesn't contain time
+        This is similar to :meth:`format_guilded`, but it doesn't contain time
         information.
         """
         stubs: List[str] = list()
@@ -140,7 +140,7 @@ class LogEntry:
     def format_stderr(self):
         """Format entry so it can be sent to log file.
 
-        This is similar to :meth:`format_discord`, but it also contains time
+        This is similar to :meth:`format_guilded`, but it also contains time
         information.
         """
         stubs: List[str] = list()
@@ -176,17 +176,17 @@ class LogEntry:
 
     @property
     def actor_id(self):
-        """Get actor's discord snowflake ID."""
+        """Get actor's guilded snowflake ID."""
         return getattr(self.actor, "id", None)
 
     @property
     def actor_name(self):
-        """Get actor's discord name."""
+        """Get actor's guilded name."""
         return getattr(self.actor, "name", str(self.actor_id))
 
     @property
     def guild_id(self):
-        """Get guild's discord snowflake ID."""
+        """Get guild's guilded snowflake ID."""
         return getattr(self.guild, "id", None)
 
     @property
@@ -196,7 +196,7 @@ class LogEntry:
 
     @property
     def channel_id(self):
-        """Get channel's discord snowflake ID."""
+        """Get channel's guilded snowflake ID."""
         return getattr(self.channel, "id", None)
 
     @property
@@ -241,7 +241,7 @@ class Logger:
     bot = None
     scope: str = NotImplemented
 
-    def __init__(self, bot: discord.ext.commands.bot):
+    def __init__(self, bot: guilded.ext.commands.bot):
         """Initiate the singleton class.
 
         This function has to be implemented in subclass.
@@ -249,7 +249,7 @@ class Logger:
         raise NotImplementedError("This function has to be subclassed.")
 
     @staticmethod
-    def logger(bot: discord.ext.commands.bot):
+    def logger(bot: guilded.ext.commands.bot):
         """Get singleton instance of Logger class.
 
         This function has to be implemented in subclass.
@@ -264,7 +264,7 @@ class Logger:
         message: str,
         **extra: dict,
     ):
-        """Log event on server, prepare for discord-side logging."""
+        """Log event on server, prepare for guilded-side logging."""
 
         # TODO We may want to add "keep_traceback" parameter here
         # so we can have backups of exceptions
@@ -310,9 +310,9 @@ class Logger:
         await self._send(entry, [log_info])
 
     async def _send(self, entry: LogEntry, channels: List[Logging]):
-        """Distribute the log entry to all subscribed discord channels."""
+        """Distribute the log entry to all subscribed guilded channels."""
 
-        text = utils.Text.split(entry.format_discord())
+        text = utils.Text.split(entry.format_guilded())
 
         # TODO This should probably be done in parallel
         for target in channels:
@@ -386,7 +386,7 @@ class Bot(Logger):
 
     This class subclasses the Logger class. By using the "bot" scope, it
     makes it possible to use two log classes (along with "guild" scope)
-    with identical API. Because the logs can be async-sent to the discord
+    with identical API. Because the logs can be async-sent to the guilded
     logging channel, they have to operate in await-async style.
     """
 
@@ -416,7 +416,7 @@ class Guild(Logger):
 
     This class subclasses the Logger class. By using the "guild" scope, it
     makes it possible to use two log classes (along with "bot" scope)
-    with identical API. Because the logs can be async-sent to the discord
+    with identical API. Because the logs can be async-sent to the guilded
     logging channel, they have to operate in await-async style.
     """
 

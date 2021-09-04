@@ -6,7 +6,7 @@ Database setup
 
 .. include:: _database.rst
 
-Discord bot token
+Guilded bot token
 -----------------
 
 .. include:: _token.rst

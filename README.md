@@ -9,7 +9,7 @@
 
 ## About
 
-Pumpkin.py is a Discord bot framework written in discord.py.
+Pumpkin.py is a Guilded bot framework written in guilded.py.
 
 ## Installing and running the bot
 

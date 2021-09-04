@@ -3,7 +3,7 @@ class TranslationContext:
 
     There are some situations where there is no command context, e.g. when a
     reaction is added, especially when it is
-    :class:`discord.RawReactionActionEvent`. This may be used to get around.
+    :class:`guilded.RawReactionActionEvent`. This may be used to get around.
 
     See :class:`~core.text.Translator` for more details.
     """

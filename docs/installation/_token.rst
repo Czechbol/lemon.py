@@ -1,6 +1,6 @@
-The token is form of authentication your bot uses to communicate with Discord servers.
+The token is form of authentication your bot uses to communicate with Guilded servers.
 
-Go to `Discord Developers page <https://discord.com/developers>`_, click [New Application] and fill the form.
+Go to `Guilded Developers page <https://guilded.com/developers>`_, click [New Application] and fill the form.
 
 Then go to the Bot tab and convert your application to bot. While you're there, enable both Privileged Gateway Intents (Presence, Server Members), as the bot requires them for some of its functions.
 

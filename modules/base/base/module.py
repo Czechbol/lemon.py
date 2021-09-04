@@ -1,8 +1,8 @@
 import datetime
 from math import ceil
 
-import discord
-from discord.ext import commands
+import guilded
+from guilded.ext import commands
 
 from core import TranslationContext
 from core import check, text, logging, utils
@@ -35,7 +35,7 @@ class Base(commands.Cog):
         now = datetime.datetime.now().replace(microsecond=0)
         delta = now - self.boot
 
-        embed = utils.Discord.create_embed(
+        embed = utils.Guilded.create_embed(
             author=ctx.author,
             title=tr("uptime", "title", ctx),
         )
@@ -56,12 +56,12 @@ class Base(commands.Cog):
     @commands.check(check.acl)
     @commands.group(name="autopin")
     async def autopin(self, ctx):
-        await utils.Discord.send_help(ctx)
+        await utils.Guilded.send_help(ctx)
 
     @commands.check(check.acl)
     @autopin.command(name="get")
-    async def autopin_get(self, ctx, channel: discord.TextChannel = None):
-        embed = utils.Discord.create_embed(
+    async def autopin_get(self, ctx, channel: guilded.TextChannel = None):
+        embed = utils.Guilded.create_embed(
             author=ctx.author, title=tr("autopin get", "title", ctx)
         )
         limit: int = getattr(AutoPin.get(ctx.guild.id, None), "limit", 0)
@@ -87,7 +87,7 @@ class Base(commands.Cog):
 
     @commands.check(check.acl)
     @autopin.command(name="set")
-    async def autopin_set(self, ctx, limit: int, channel: discord.TextChannel = None):
+    async def autopin_set(self, ctx, limit: int, channel: guilded.TextChannel = None):
         """Set autopin limit."""
         if limit < 1:
             raise commands.ArgumentError("Limit has to be at least one.")
@@ -114,7 +114,7 @@ class Base(commands.Cog):
 
     @commands.check(check.acl)
     @autopin.command(name="unset")
-    async def autopin_unset(self, ctx, channel: discord.TextChannel = None):
+    async def autopin_unset(self, ctx, channel: guilded.TextChannel = None):
         if channel is None:
             AutoPin.remove(ctx.guild.id, None)
             await guild_log.info(ctx.author, ctx.channel, "Autopin unset globally.")
@@ -129,12 +129,12 @@ class Base(commands.Cog):
     @commands.check(check.acl)
     @commands.group(name="bookmarks")
     async def bookmarks(self, ctx):
-        await utils.Discord.send_help(ctx)
+        await utils.Guilded.send_help(ctx)
 
     @commands.check(check.acl)
     @bookmarks.command(name="get")
-    async def bookmarks_get(self, ctx, channel: discord.TextChannel = None):
-        embed = utils.Discord.create_embed(
+    async def bookmarks_get(self, ctx, channel: guilded.TextChannel = None):
+        embed = utils.Guilded.create_embed(
             author=ctx.author, title=tr("bookmarks get", "title", ctx)
         )
         enabled: int = getattr(Bookmark.get(ctx.guild.id, None), "enabled", False)
@@ -158,7 +158,7 @@ class Base(commands.Cog):
     @commands.check(check.acl)
     @bookmarks.command(name="set")
     async def bookmarks_set(
-        self, ctx, enabled: bool, channel: discord.TextChannel = None
+        self, ctx, enabled: bool, channel: guilded.TextChannel = None
     ):
         """Enable or disable bookmarking."""
         if channel is None:
@@ -175,7 +175,7 @@ class Base(commands.Cog):
 
     @commands.check(check.acl)
     @bookmarks.command(name="unset")
-    async def bookmarks_unset(self, ctx, channel: discord.TextChannel = None):
+    async def bookmarks_unset(self, ctx, channel: guilded.TextChannel = None):
         """Remove bookmark settings."""
         if channel is None:
             Bookmark.remove(ctx.guild.id, None)
@@ -191,12 +191,12 @@ class Base(commands.Cog):
     @commands.check(check.acl)
     @commands.group(name="autothread", aliases=["autothreads"])
     async def autothread(self, ctx):
-        await utils.Discord.send_help(ctx)
+        await utils.Guilded.send_help(ctx)
 
     @commands.check(check.acl)
     @autothread.command(name="get")
-    async def autothread_get(self, ctx, channel: discord.TextChannel = None):
-        embed = utils.Discord.create_embed(
+    async def autothread_get(self, ctx, channel: guilded.TextChannel = None):
+        embed = utils.Guilded.create_embed(
             author=ctx.author, title=tr("autothread get", "title", ctx)
         )
         limit: int = getattr(AutoThread.get(ctx.guild.id, None), "limit", 0)
@@ -205,7 +205,7 @@ class Base(commands.Cog):
             name=tr("autothread get", "limit", ctx),
             value=value,
         )
-        if discord.version_info.major < 2:
+        if guilded.version_info.major < 2:
             embed.add_field(
                 name=tr("autothread get", "warning", ctx),
                 value=tr("autothread get", "support", ctx),
@@ -229,7 +229,7 @@ class Base(commands.Cog):
     @commands.check(check.acl)
     @autothread.command(name="set")
     async def autothread_set(
-        self, ctx, limit: int, channel: discord.TextChannel = None
+        self, ctx, limit: int, channel: guilded.TextChannel = None
     ):
         if limit < 1:
             raise commands.ArgumentError("Limit has to be at least one.")
@@ -256,7 +256,7 @@ class Base(commands.Cog):
 
     @commands.check(check.acl)
     @autothread.command(name="unset")
-    async def autothread_unset(self, ctx, channel: discord.TextChannel = None):
+    async def autothread_unset(self, ctx, channel: guilded.TextChannel = None):
         if channel is None:
             AutoThread.remove(ctx.guild.id, None)
             await guild_log.info(ctx.author, ctx.channel, "Autothread unset globally.")
@@ -270,12 +270,12 @@ class Base(commands.Cog):
     #
 
     @commands.Cog.listener()
-    async def on_raw_reaction_add(self, payload: discord.RawReactionActionEvent):
+    async def on_raw_reaction_add(self, payload: guilded.RawReactionActionEvent):
         """Handle message pinning."""
         if payload.guild_id is None or payload.member is None:
             return
 
-        message = await utils.Discord.get_message(
+        message = await utils.Guilded.get_message(
             self.bot, payload.guild_id, payload.channel_id, payload.message_id
         )
         if message is None:
@@ -283,12 +283,12 @@ class Base(commands.Cog):
                 payload.member,
                 None,
                 "Could not find message "
-                + utils.Discord.message_url_from_reaction_payload(payload),
+                + utils.Guilded.message_url_from_reaction_payload(payload),
             )
             return
 
         # do not allow the actions on system messages (boost announcements etc.)
-        if message.type != discord.MessageType.default:
+        if message.type != guilded.MessageType.default:
             return
 
         emoji = getattr(payload.emoji, "name", None)
@@ -301,8 +301,8 @@ class Base(commands.Cog):
 
     async def _autopin(
         self,
-        payload: discord.RawReactionActionEvent,
-        message: discord.Message,
+        payload: guilded.RawReactionActionEvent,
+        message: guilded.Message,
         emoji: str,
     ):
         """Handle autopin functionality."""
@@ -310,7 +310,7 @@ class Base(commands.Cog):
 
         if emoji == "📍" and not payload.member.bot:
             await payload.member.send(tr("_autopin", "bad pin emoji", tc))
-            await utils.Discord.remove_reaction(message, emoji, payload.member)
+            await utils.Guilded.remove_reaction(message, emoji, payload.member)
             return
 
         for reaction in message.reactions:
@@ -344,7 +344,7 @@ class Base(commands.Cog):
                     message.channel,
                     f"Pinned message {message.jump_url}",
                 )
-            except discord.errors.HTTPException:
+            except guilded.errors.HTTPException:
                 await guild_log.error(
                     payload.member, message.channel, "Could not pin message."
                 )
@@ -354,7 +354,7 @@ class Base(commands.Cog):
             await message.add_reaction("📍")
 
     async def _bookmark(
-        self, payload: discord.RawReactionActionEvent, message: discord.Message
+        self, payload: guilded.RawReactionActionEvent, message: guilded.Message
     ):
         """Handle bookmark functionality."""
         if not Bookmark.get(payload.guild_id).enabled:
@@ -362,7 +362,7 @@ class Base(commands.Cog):
 
         tc = TranslationContext(payload.guild_id, payload.user_id)
 
-        embed = utils.Discord.create_embed(
+        embed = utils.Guilded.create_embed(
             author=payload.member,
             title=tr("_bookmark", "title", tc),
             description=message.content[:2000],
@@ -396,7 +396,7 @@ class Base(commands.Cog):
                 value=tr("_bookmark", "total", tc, count=len(message.embeds)),
             )
 
-        await utils.Discord.remove_reaction(message, payload.emoji, payload.member)
+        await utils.Guilded.remove_reaction(message, payload.emoji, payload.member)
         await payload.member.send(embed=embed)
 
         await guild_log.debug(
@@ -405,12 +405,12 @@ class Base(commands.Cog):
 
     async def _autothread(
         self,
-        payload: discord.RawReactionActionEvent,
-        message: discord.Message,
+        payload: guilded.RawReactionActionEvent,
+        message: guilded.Message,
     ):
         """Handle autothread functionality."""
-        # only new versions of discord.py support threads
-        if discord.version_info.major < 2:
+        # only new versions of guilded.py support threads
+        if guilded.version_info.major < 2:
             return
         tc = TranslationContext(payload.guild_id, payload.user_id)
 
@@ -419,7 +419,7 @@ class Base(commands.Cog):
                 continue
 
             # we can't open threads inside of threads
-            if isinstance(message.channel, discord.Thread):
+            if isinstance(message.channel, guilded.Thread):
                 await reaction.clear()
                 return
 
@@ -432,7 +432,7 @@ class Base(commands.Cog):
                 limit = getattr(AutoThread.get(payload.guild_id, None), "limit", 0)
 
             # get message's existing thread
-            thread_of_message: discord.Thread = None  # used globally in this loop
+            thread_of_message: guilded.Thread = None  # used globally in this loop
             if message.flags.has_thread:
                 for thread in message.channel.threads:
                     if thread.id == message.id:
@@ -471,7 +471,7 @@ class Base(commands.Cog):
                     message.channel,
                     f"Thread opened on a message {message.jump_url}.",
                 )
-            except discord.errors.HTTPException:
+            except guilded.errors.HTTPException:
                 await guild_log.error(
                     payload.member,
                     message.channel,

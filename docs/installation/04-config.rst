@@ -17,12 +17,12 @@ Then add the key to the SSH configuration file (``~/.ssh/config``), so it knows 
 .. code-block:: bash
 
 	Host 10.0.0.10
-		user discord
+		user guilded
 		PubkeyAuthentication yes
 		IdentitiesOnly yes
 		IdentityFile ~/.ssh/pumpkin_server
 
-To use the SSH key on the server, you have to add the contents of the **public** key (e.g. ``/home/<username>/.ssh/pumpkin_server.pub``) to server's ``/home/discord/.ssh/authorized_keys``.
+To use the SSH key on the server, you have to add the contents of the **public** key (e.g. ``/home/<username>/.ssh/pumpkin_server.pub``) to server's ``/home/guilded/.ssh/authorized_keys``.
 
 PostgreSQL backups
 ------------------

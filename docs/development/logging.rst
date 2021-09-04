@@ -18,7 +18,7 @@ And to use the logger, use
 
 	try:
 	    await action_that_throws_error()
-	except discord.exceptions.HTTPException:
+	except guilded.exceptions.HTTPException:
 	    await guild_log(
 	        ctx.author,
 	        ctx.channel,
@@ -26,4 +26,4 @@ And to use the logger, use
 	        exception=exc,
 	    )
 
-Please note that because the logs may be sent to the logging channels on Discord, they have to be ``await``\ ed.
+Please note that because the logs may be sent to the logging channels on Guilded, they have to be ``await``\ ed.

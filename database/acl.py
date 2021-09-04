@@ -11,7 +11,7 @@ from database import session
 class ACL_group(database.base):
     """Permission group.
 
-    Groups are the connecting interface between Discord roles and permission
+    Groups are the connecting interface between Guilded roles and permission
     rules. They are meant to be organised in a trees:
 
     .. code-block::
@@ -75,7 +75,7 @@ class ACL_group(database.base):
         :param guild_id: Guild ID.
         :param name: Permission group name.
         :param parent: Name of parent permission group. May be ``None``.
-        :param role_id: ID for the Discord :class:`~discord.Role`. May be ``None`` to
+        :param role_id: ID for the Guilded :class:`~guilded.Role`. May be ``None`` to
             disable mapping from role to the group.
         :return: New group.
         """
@@ -155,7 +155,7 @@ class ACL_rule(database.base):
 
     Each rule holds information about the command, defaults (``True`` or
     ``False``), its guild (as ACL permissions are guild-dependent) and a list
-    of Discord users and ACL groups.
+    of Guilded users and ACL groups.
 
     .. note::
 
@@ -204,7 +204,7 @@ class ACL_rule(database.base):
 
         :param guild_id: Guild ID.
         :param command: Qualified command name (see
-            :attr:`~discord.ext.commands.Command.qualified_name` attribute).
+            :attr:`~guilded.ext.commands.Command.qualified_name` attribute).
         :param default: ``True`` if the command should be usable by anyone by
             default, ``False`` otherwise.
         :return: New rule.
@@ -223,7 +223,7 @@ class ACL_rule(database.base):
 
         :param guild_id: Guild ID.
         :param command: Qualified command name (see
-            :attr:`~discord.ext.commands.Command.qualified_name` attribute).
+            :attr:`~guilded.ext.commands.Command.qualified_name` attribute).
         :return: Found permission rule or ``None``.
         """
 
@@ -250,7 +250,7 @@ class ACL_rule(database.base):
 
         :param guild_id: Guild ID.
         :param command: Qualified command name (see
-            :attr:`~discord.ext.commands.Command.qualified_name` attribute).
+            :attr:`~guilded.ext.commands.Command.qualified_name` attribute).
         :return: Number of deleted rules, always ``0`` or ``1``.
         """
         query = (

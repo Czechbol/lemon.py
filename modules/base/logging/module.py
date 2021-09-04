@@ -1,6 +1,6 @@
 from typing import Optional
 
-from discord.ext import commands
+from guilded.ext import commands
 
 from core import check, text, logging, utils
 from database.logging import Logging as DBLogging
@@ -22,7 +22,7 @@ class Logging(commands.Cog):
     @commands.check(check.acl)
     @commands.group(name="logging")
     async def logging_(self, ctx):
-        await utils.Discord.send_help(ctx)
+        await utils.Guilded.send_help(ctx)
 
     @commands.check(check.acl)
     @logging_.command(name="list")

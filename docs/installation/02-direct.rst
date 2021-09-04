@@ -84,17 +84,17 @@ You may also want to configure firewall. The complete setup is out the scope of 
 Account setup
 -------------
 
-Next you'll need to create the user account. You can pick whatever name you want, we'll be using ``discord``.
+Next you'll need to create the user account. You can pick whatever name you want, we'll be using ``guilded``.
 
 .. code-block:: bash
 
-	useradd discord
-	passwd discord
-	mkdir /home/discord
-	touch /home/discord/.hushlogin
-	chown -R discord:discord /home/discord
+	useradd guilded
+	passwd guilded
+	mkdir /home/guilded
+	touch /home/guilded/.hushlogin
+	chown -R guilded:guilded /home/guilded
 
-	cd /home/discord
+	cd /home/guilded
 
 	cat << EOF >> .profile
 	alias ls="ls --color=auto --group-directories-first -l"
@@ -103,14 +103,14 @@ Next you'll need to create the user account. You can pick whatever name you want
 	EOF
 	echo "source .profile" > .bashrc
 
-If you want to follow the least-privilege rule, you can allow the ``discord`` user to run some privileged commands (for restarting the bot), but not others (like rebooting the system). If you'll be using ``systemd`` to manage the bot (read :ref:`the the section below <systemd service>` to see the setup), you can run ``visudo`` and enter the following:
+If you want to follow the least-privilege rule, you can allow the ``guilded`` user to run some privileged commands (for restarting the bot), but not others (like rebooting the system). If you'll be using ``systemd`` to manage the bot (read :ref:`the the section below <systemd service>` to see the setup), you can run ``visudo`` and enter the following:
 
 .. code-block::
 
 	Cmnd_Alias PIE_CTRL = /bin/systemctl start pumpkin, /bin/systemctl stop pumpkin, /bin/systemctl restart pumpkin
 	Cmnd_Alias PIE_STAT = /bin/systemctl status pumpkin, /bin/journalctl -u pumpkin, /bin/journalctl -f -u pumpkin
 
-	discord ALL=(ALL) NOPASSWD: PIE_CTRL, PIE_STAT
+	guilded ALL=(ALL) NOPASSWD: PIE_CTRL, PIE_STAT
 
 .. _database setup:
 
@@ -141,7 +141,7 @@ To update the bot later, run
 
 .. _token:
 
-Discord bot token
+Guilded bot token
 -----------------
 
 .. include:: _token.rst
@@ -166,12 +166,12 @@ Systemd service can autostart or restart the application when it crashes. The se
 	[Service]
 	Restart = on-failure
 	RestartSec = 60
-	User = discord
+	User = guilded
 	StandardOutput = journal+console
 
-	EnvironmentFile = /home/discord/pumpkin/.env
-	WorkingDirectory = /home/discord/pumpkin
-	ExecStart = /home/discord/pumpkin/.venv/bin/python3 pumpkin.py
+	EnvironmentFile = /home/guilded/pumpkin/.env
+	WorkingDirectory = /home/guilded/pumpkin
+	ExecStart = /home/guilded/pumpkin/.venv/bin/python3 pumpkin.py
 
 	[Install]
 	WantedBy = multi-user.target

@@ -4,8 +4,8 @@ import re
 import tempfile
 from typing import Any, Dict, List, Set, Tuple
 
-import discord
-from discord.ext import commands
+import guilded
+from guilded.ext import commands
 
 from core import check, text, logging, utils
 from database.acl import ACL_group, ACL_rule
@@ -28,13 +28,13 @@ class ACL(commands.Cog):
     @commands.group(name="acl")
     async def acl_(self, ctx):
         """Permission control."""
-        await utils.Discord.send_help(ctx)
+        await utils.Guilded.send_help(ctx)
 
     @commands.check(check.acl)
     @acl_.group(name="group")
     async def acl_group(self, ctx):
         """Permission group control."""
-        await utils.Discord.send_help(ctx)
+        await utils.Guilded.send_help(ctx)
 
     @commands.check(check.acl)
     @acl_group.command(name="list")
@@ -102,11 +102,11 @@ class ACL(commands.Cog):
 
         :param name: string matching ``[a-zA-Z-]+``.
         :param parent: ACL parent group name.
-        :param role_id: Discord role ID.
+        :param role_id: Guilded role ID.
 
         To unlink the group from the parent, set it to "".
 
-        To set up virtual group with no link to Discord roles, set ``role_id``
+        To set up virtual group with no link to Guilded roles, set ``role_id``
         to ``0``.
         """
         RE_NAME = r"[a-zA-Z-]+"
@@ -137,11 +137,11 @@ class ACL(commands.Cog):
 
         * name: string matching ``[a-zA-Z-]+``.
         * parent: parent group name.
-        * role_id: Discord role ID.
+        * role_id: Guilded role ID.
 
         To unlink the group from any parents, set parent to "".
 
-        To set up virtual group with no link to discord roles, set ``role_id``
+        To set up virtual group with no link to guilded roles, set ``role_id``
         to ``0``.
         """
         group = ACL_group.get(ctx.guild.id, name)
@@ -190,7 +190,7 @@ class ACL(commands.Cog):
     @acl_.group(name="rule")
     async def acl_rule(self, ctx):
         """Permission rules."""
-        await utils.Discord.send_help(ctx)
+        await utils.Guilded.send_help(ctx)
 
     @commands.check(check.acl)
     @acl_rule.command(name="template")
@@ -214,7 +214,7 @@ class ACL(commands.Cog):
         file.seek(0)
         await ctx.reply(
             tr("acl rule generate", "reply", count=len(export)),
-            file=discord.File(fp=file, filename=filename),
+            file=guilded.File(fp=file, filename=filename),
         )
         file.close()
         await guild_log.debug(ctx.author, ctx.channel, "ACL rules defaults exported.")
@@ -241,7 +241,7 @@ class ACL(commands.Cog):
         file.seek(0)
         await ctx.reply(
             tr("acl rule export", "reply", ctx, count=len(rules)),
-            file=discord.File(fp=file, filename=filename),
+            file=guilded.File(fp=file, filename=filename),
         )
         file.close()
         await guild_log.info(ctx.author, ctx.channel, "ACL rules exported.")
@@ -342,7 +342,7 @@ class ACL(commands.Cog):
     @commands.check(check.acl)
     @commands.group(name="command")
     async def command(self, ctx):
-        await utils.Discord.send_help(ctx)
+        await utils.Guilded.send_help(ctx)
 
     @commands.check(check.acl)
     @command.command(name="disable")
@@ -368,11 +368,11 @@ class ACL(commands.Cog):
 
     #
 
-    def get_group_embed(self, ctx, group: ACL_group) -> discord.Embed:
+    def get_group_embed(self, ctx, group: ACL_group) -> guilded.Embed:
         """Get embed with group information."""
         group_dict: dict = group.dump()
 
-        embed = utils.Discord.create_embed(
+        embed = utils.Guilded.create_embed(
             author=ctx.author,
             title=tr("group embed", "title", ctx, name=group_dict["name"]),
         )

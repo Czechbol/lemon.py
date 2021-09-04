@@ -24,8 +24,8 @@ class Logging(database.base):
         configuration change.
 
     Each :class:`~database.logging.Logging` object has attribute
-    :attr:`guild_id` representing :class:`discord.Guild` and :attr:`channel_id`
-    representing :class:`discord.TextChannel`. They determine where the log
+    :attr:`guild_id` representing :class:`guilded.Guild` and :attr:`channel_id`
+    representing :class:`guilded.TextChannel`. They determine where the log
     should be sent, if one is created.
 
     The :attr:`scope` may only have two values: ``bot`` or ``guild``, and it
@@ -49,7 +49,7 @@ class Logging(database.base):
     .. note::
 
         You can think of this object as log subscription, or as *the minimum
-        requirements for the log to be sent to some Discord channel*.
+        requirements for the log to be sent to some Guilded channel*.
 
     Command API for this database table is located in the
     :class:`~modules.base.logging.module.Logging` module.

@@ -1,12 +1,12 @@
-# discord.py exceptions
+# guilded.py exceptions
 
 This document serves as a reference.
 
-Below are full exception lists as of `discord.py 1.6.0`. Because it is hard to track exception
+Below are full exception lists as of `guilded.py 1.6.0`. Because it is hard to track exception
 changes, it has been copypasted from the documentation:
 
-- https://discordpy.readthedocs.io/en/v1.6.0/api.html#exception-hierarchy
-- https://discordpy.readthedocs.io/en/v1.6.0/ext/commands/api.html#exception-hierarchy
+- https://guildedpy.readthedocs.io/en/v1.6.0/api.html#exception-hierarchy
+- https://guildedpy.readthedocs.io/en/v1.6.0/ext/commands/api.html#exception-hierarchy
 
 To check if there were any changes, you can paste latest list and check the diff -- if there is
 none, everything is up to date.
@@ -14,8 +14,8 @@ none, everything is up to date.
 ```
 ClientException
 ConnectionClosed
-DiscordException
-DiscordServerError
+GuildedException
+GuildedServerError
 Forbidden
 GatewayNotFound
 HTTPException
@@ -49,7 +49,7 @@ CommandOnCooldown
 CommandRegistrationError
 ConversionError
 DisabledCommand
-DiscordException
+GuildedException
 EmojiNotFound
 ExpectedClosingQuoteError
 ExtensionAlreadyLoaded

@@ -1,8 +1,8 @@
 from functools import wraps
 from typing import Optional, Callable
 
-import discord
-from discord.ext import commands
+import guilded
+from guilded.ext import commands
 
 from core.utils import tr
 from database import acl as acldb
@@ -21,11 +21,11 @@ def acl(ctx: commands.Context) -> bool:
     ``@commands.guild_only()``.
 
     .. note::
-        Because discord.py's :class:`~discord.ext.commands.Bot` method
-        :meth:`~discord.ext.commands.Bot.is_owner()` is a coroutine, we have to
+        Because guilded.py's :class:`~guilded.ext.commands.Bot` method
+        :meth:`~guilded.ext.commands.Bot.is_owner()` is a coroutine, we have to
         access the data directly, instead of loading them dynamically from the
-        API endpoint. The :attr:`~discord.ext.commands.Bot.owner_id`/
-        :attr:`~discord.ext.commands.Bot.owner_ids` argument may be ``None``:
+        API endpoint. The :attr:`~guilded.ext.commands.Bot.owner_id`/
+        :attr:`~guilded.ext.commands.Bot.owner_ids` argument may be ``None``:
         that's the reason pumpkin.py refreshes it on each ``on_ready()`` event
         in the main file.
 
@@ -123,7 +123,7 @@ def acl(ctx: commands.Context) -> bool:
 def version(
     major: int, minor: int, micro: Optional[int] = None, reply: bool = True
 ) -> Optional[Callable]:
-    """Specify minimal discord.py version
+    """Specify minimal guilded.py version
 
     :param major: minimum major version
     :param minor: minimum minor version of the specified major version
@@ -135,7 +135,7 @@ def version(
     def decorator(func):
         @wraps(func)
         async def wrapper(*args, **kwargs):
-            version_info = discord.version_info
+            version_info = guilded.version_info
             version_check = True
 
             if version_info.major == major:

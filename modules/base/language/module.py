@@ -1,4 +1,4 @@
-from discord.ext import commands
+from guilded.ext import commands
 
 import database.config
 from core import check, text, logging, utils
@@ -26,12 +26,12 @@ class Language(commands.Cog):
     @commands.check(check.acl)
     @commands.group(name="language")
     async def language(self, ctx):
-        await utils.Discord.send_help(ctx)
+        await utils.Guilded.send_help(ctx)
 
     @commands.check(check.acl)
     @language.command(name="get")
     async def language_get(self, ctx):
-        embed = utils.Discord.create_embed(
+        embed = utils.Guilded.create_embed(
             author=ctx.author,
             title=tr("language get", "title", ctx),
             description=tr(
@@ -100,7 +100,7 @@ class Language(commands.Cog):
     @commands.check(check.acl)
     @language.group(name="guild")
     async def language_guild(self, ctx):
-        await utils.Discord.send_help(ctx)
+        await utils.Guilded.send_help(ctx)
 
     @commands.check(check.acl)
     @language_guild.command(name="set")

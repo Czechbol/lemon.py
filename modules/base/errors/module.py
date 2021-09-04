@@ -2,8 +2,8 @@ import re
 import traceback
 from typing import Tuple
 
-import discord
-from discord.ext import commands
+import guilded
+from guilded.ext import commands
 
 import core.exceptions
 from core import text, logging, utils
@@ -55,7 +55,7 @@ class Errors(commands.Cog):
 
         # Get information
         title, content, log_error = Errors.__get_error_message(ctx, error)
-        embed = utils.Discord.create_embed(
+        embed = utils.Guilded.create_embed(
             author=ctx.author, error=True, title=title, description=content
         )
         if log_error:
@@ -244,7 +244,7 @@ class Errors(commands.Cog):
                 False,
             )
         if isinstance(error, commands.CommandError) or isinstance(
-            error, discord.ClientException
+            error, guilded.ClientException
         ):
             return (
                 tr(type(error).__name__, "name", ctx),
@@ -252,9 +252,9 @@ class Errors(commands.Cog):
                 True,
             )
 
-        # non-critical discord.py exceptions
-        if type(error) == discord.NoMoreItems or isinstance(
-            error, discord.HTTPException
+        # non-critical guilded.py exceptions
+        if type(error) == guilded.NoMoreItems or isinstance(
+            error, guilded.HTTPException
         ):
             return (
                 tr(type(error).__name__, "name", ctx),
@@ -262,8 +262,8 @@ class Errors(commands.Cog):
                 True,
             )
 
-        # critical discord.py exceptions
-        if isinstance(error, discord.DiscordException):
+        # critical guilded.py exceptions
+        if isinstance(error, guilded.GuildedException):
             return (
                 tr(type(error).__name__, "name", ctx),
                 tr(type(error).__name__, "value", ctx),

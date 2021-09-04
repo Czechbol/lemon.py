@@ -4,7 +4,7 @@ import sys
 from functools import lru_cache
 from typing import Sequence, Callable, Optional
 
-from discord.ext import commands
+from guilded.ext import commands
 
 from core import text, exceptions
 
@@ -15,8 +15,8 @@ tr = text.Translator(__file__).translate
 class Help(commands.MinimalHelpCommand):
     """Class for **help** command construction.
 
-    It inherits from discord.py's
-    :class:`~discord.ext.commands.MinimalHelpCommand` and tries to alter only
+    It inherits from guilded.py's
+    :class:`~guilded.ext.commands.MinimalHelpCommand` and tries to alter only
     the minimum of its behavior.
 
     The biggest thing it changes is that it uses INI files for text resources,

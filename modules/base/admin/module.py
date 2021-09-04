@@ -7,7 +7,7 @@ import sys
 import tempfile
 from typing import Optional, List, Tuple
 
-from discord.ext import commands, tasks
+from guilded.ext import commands, tasks
 
 import database.config
 from core import check, text, logging, utils
@@ -78,7 +78,7 @@ class Admin(commands.Cog):
 
     @tasks.loop(minutes=1)
     async def status_loop(self):
-        """Observe latency to the Discord API and switch status automatically.
+        """Observe latency to the Guilded API and switch status automatically.
 
         * Online: <0s, 0.25s>
         * Idle: (0.25s, 0.5s>
@@ -98,7 +98,7 @@ class Admin(commands.Cog):
                 None,
                 f"Latency is {self.bot.latency:.2f}, setting status to {status}.",
             )
-            await utils.Discord.update_presence(self.bot, status=status)
+            await utils.Guilded.update_presence(self.bot, status=status)
 
     @status_loop.before_loop
     async def before_status_loop(self):
@@ -110,7 +110,7 @@ class Admin(commands.Cog):
     @commands.check(check.acl)
     @commands.group(name="repository", aliases=["repo"])
     async def repository(self, ctx):
-        await utils.Discord.send_help(ctx)
+        await utils.Guilded.send_help(ctx)
 
     @commands.check(check.acl)
     @repository.command(name="list")
@@ -174,7 +174,7 @@ class Admin(commands.Cog):
             tempdir.cleanup()
             if "does not exist" in download_stderr:
                 return await ctx.send(tr("repository install", "bad url", ctx))
-            embed = utils.Discord.create_embed(
+            embed = utils.Guilded.create_embed(
                 error=True,
                 author=ctx.author,
                 title=tr("repository install", "git error", ctx),
@@ -205,7 +205,7 @@ class Admin(commands.Cog):
         repo_deps = Admin._install_module_requirements(path=workdir)
         if repo_deps is not None and repo_deps.returncode != 0:
             tempdir.cleanup()
-            embed = utils.Discord.create_embed(
+            embed = utils.Guilded.create_embed(
                 error=True,
                 author=ctx.author,
                 title=tr("repository install", "requirements error", ctx),
@@ -320,7 +320,7 @@ class Admin(commands.Cog):
     @commands.check(check.acl)
     @commands.group(name="module")
     async def module(self, ctx):
-        await utils.Discord.send_help(ctx)
+        await utils.Guilded.send_help(ctx)
 
     @commands.check(check.acl)
     @module.command(name="load")
@@ -351,12 +351,12 @@ class Admin(commands.Cog):
     @commands.check(check.acl)
     @commands.group(name="config")
     async def config_(self, ctx):
-        await utils.Discord.send_help(ctx)
+        await utils.Guilded.send_help(ctx)
 
     @commands.check(check.acl)
     @config_.command(name="get")
     async def config_get(self, ctx):
-        embed = utils.Discord.create_embed(
+        embed = utils.Guilded.create_embed(
             author=ctx.author,
             title=tr("config get", "title", ctx),
         )
@@ -450,12 +450,12 @@ class Admin(commands.Cog):
             self.status_loop.cancel()
 
         if key in ("prefix", "status"):
-            await utils.Discord.update_presence(self.bot)
+            await utils.Guilded.update_presence(self.bot)
 
     @commands.check(check.acl)
     @commands.group(name="pumpkin")
     async def pumpkin_(self, ctx):
-        await utils.Discord.send_help(ctx)
+        await utils.Guilded.send_help(ctx)
 
     @commands.check(check.acl)
     @pumpkin_.command(name="restart")
@@ -585,7 +585,7 @@ class Admin(commands.Cog):
         :param path: A Path to the repository.
         :return:
             :class:`subprocess.CompletedProcess` in case of succesfull installation,
-            :class:`discord.Embed` if installation fails,
+            :class:`guilded.Embed` if installation fails,
             ``None`` if the file was not found.
         """
         filepath = os.path.join(path, "requirements.txt")

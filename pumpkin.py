@@ -2,8 +2,8 @@ import os
 import sys
 from typing import List
 
-import discord
-from discord.ext import commands
+import guilded
+from guilded.ext import commands
 
 from core import exceptions
 
@@ -48,7 +48,7 @@ database.init_modules()
 config = database.config.Config.get()
 
 
-# Setup discord.py
+# Setup guilded.py
 
 
 def _prefix_callable(bot, message) -> List[str]:
@@ -64,13 +64,13 @@ def _prefix_callable(bot, message) -> List[str]:
     return base
 
 
-intents = discord.Intents.all()
+intents = guilded.Intents.all()
 
 from core import utils
 from core.help import Help
 
 bot = commands.Bot(
-    allowed_mentions=discord.AllowedMentions(roles=False, everyone=False, users=True),
+    allowed_mentions=guilded.AllowedMentions(roles=False, everyone=False, users=True),
     command_prefix=_prefix_callable,
     help_command=Help(),
     intents=intents,
@@ -92,7 +92,7 @@ already_loaded: bool = False
 
 async def update_app_info(bot: commands.Bot):
     # Update bot information
-    app: discord.AppInfo = await bot.application_info()
+    app: guilded.AppInfo = await bot.application_info()
     if app.team:
         bot.owner_ids = {m.id for m in app.team.members}
     else:
@@ -109,7 +109,7 @@ async def on_ready():
 
     # If the status is set to "auto", let the loop in Admin module take care of it
     status = "invisible" if config.status == "auto" else config.status
-    await utils.Discord.update_presence(bot, status=status)
+    await utils.Guilded.update_presence(bot, status=status)
 
     if already_loaded:
         await bot_log.info(None, None, "Reconnected")

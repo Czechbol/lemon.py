@@ -13,7 +13,6 @@ The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "S
 - [Languages](#languages): How to create language files
 - [Code quality](#code-quality): How to run automatic code tests
 
-
 ## Repository setup
 
 - Fork the repository
@@ -21,7 +20,6 @@ The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "S
 - Add upstream: `git remote add upstream git@github.com:Pumpkin-py/pumpkin.py.git`
 - Create your feature branch: `git checkout main && git branch my-feature && git checkout my-feature`
 - Open your pull requests from this branch
-
 
 ## Bot setup
 
@@ -46,14 +44,13 @@ nano .env
 set -o allexport; source .env; set +o allexport
 ```
 
-| Key | Description |
-|-----|-------------|
-| DB_STRING | Database connection string |
-| TOKEN | Token obtained from [Discord Developers page](https://discord.com/developers) |
-| BOT_PREFIX | Prefix character (`!`, `?` or something similar) |
-| BOT_MENTIONPREFIX | Whether to react to mentions: `0` or `1`  |
-| BOT_GENDER | How the bot should address itself: `f` or `m`    |
-
+| Key               | Description                                                                   |
+| ----------------- | ----------------------------------------------------------------------------- |
+| DB_STRING         | Database connection string                                                    |
+| TOKEN             | Token obtained from [Guilded Developers page](https://guilded.com/developers) |
+| BOT_PREFIX        | Prefix character (`!`, `?` or something similar)                              |
+| BOT_MENTIONPREFIX | Whether to react to mentions: `0` or `1`                                      |
+| BOT_GENDER        | How the bot should address itself: `f` or `m`                                 |
 
 ## Import structure
 
@@ -73,8 +70,8 @@ import thirdparty_library_b.submodule_c
 from thirdparty_library_c import submodule_d
 from thirdparty_library_c import submodule_e
 
-import discord
-from discord.ext import commands
+import guilded
+from guilded.ext import commands
 
 from core import text, utils
 from .database import RepoModuleTable as Table
@@ -86,7 +83,7 @@ class MyModule(commands.Cog):
     ...
 ```
 
-Eg. **Python** libraries, **3rd party** libraries, **discord.py** imports and **pumpkin.py** imports, separated by one line of space. Then two empty lines, translation initialisation, one empty line, logging setup, two empty lines and then the class definition. The `setup` function for **discord.py** should be the last thing to be declared in the file.
+Eg. **Python** libraries, **3rd party** libraries, **guilded.py** imports and **pumpkin.py** imports, separated by one line of space. Then two empty lines, translation initialisation, one empty line, logging setup, two empty lines and then the class definition. The `setup` function for **guilded.py** should be the last thing to be declared in the file.
 
 ## Database
 
@@ -121,6 +118,7 @@ from .database import EconomyBankAccounts as Accounts
 ## Languages
 
 If the module returns some text, it MUST NOT be hardcoded. Instead, use the `tr =` import:
+
 ```py
 tr = text.Translator(__file__).translate
 
@@ -130,6 +128,7 @@ tr = text.Translator(__file__).translate
 ```
 
 Language INI files should be placed in `lang/` directory inside the module:
+
 ```ini
 [send]
 help = Send the text back
