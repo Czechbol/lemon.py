@@ -192,7 +192,7 @@ class Guilded:
             icon_url=getattr(author, "avatar_url", guilded.Embed.Empty),
             text=footer,
         )
-        # embed.timestamp = datetime.datetime.utcnow() # FIXME Reported this issue to the guilded.py dev, perhaps it will work soon
+        embed.timestamp = datetime.datetime.utcnow()
 
         return embed
 
