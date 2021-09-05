@@ -252,16 +252,6 @@ class Errors(commands.Cog):
                 True,
             )
 
-        # non-critical guilded.py exceptions
-        if type(error) == guilded.NoMoreItems or isinstance(
-            error, guilded.HTTPException
-        ):
-            return (
-                tr(type(error).__name__, "name", ctx),
-                tr(type(error).__name__, "value", ctx),
-                True,
-            )
-
         # critical guilded.py exceptions
         if isinstance(error, guilded.GuildedException):
             return (

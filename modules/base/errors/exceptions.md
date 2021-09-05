@@ -22,7 +22,6 @@ HTTPException
 InvalidArgument
 InvalidData
 LoginFailure
-NoMoreItems
 NotFound
 PrivilegedIntentsRequired
 ```
